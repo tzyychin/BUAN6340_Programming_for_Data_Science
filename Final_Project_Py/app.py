@@ -4,9 +4,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import time
 from finance import *
-from stock import *
 
-startTime = time.time()
 app = dash.Dash()
 app.title = 'UT Dallas'
 app.layout = html.Div([
@@ -118,12 +116,10 @@ def update_table(selected_dropdown_value):
             html.Th("Market Cap: "),
             html.Td("$ {:,.0f}".format(
                 symbol.shares_outstanding * symbol.previous_close)),
-            html.Th("Avg. Mean Error on Validation Dataset: "),
+            html.Th("Mean Prediction Error on Validation Dataset: "),
             html.Td("$ {:.2f}".format(symbol.cv_avg_mean_error)),
-            html.Th("Avg. Mean Error on Test Dataset: "),
+            html.Th("Mean Prediction Error on Test Dataset: "),
             html.Td("$ {:.2f}".format(symbol.avg_mean_error)),
-            html.Th("Runtime: "),
-            html.Td("{:.2f}s".format(elapsedTime))
         ])
     ]
     return table
