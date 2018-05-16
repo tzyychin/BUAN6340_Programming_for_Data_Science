@@ -1,14 +1,6 @@
 BUAN6301 Programming for Data Science
+J's Finance Explorer
 
-Development Environment
-- Atom
-- Hydrogen
-- Autocomplete-Python
-- liter-pycodestyle
-
-Development Packages
-- pandas
-- numpy
-- beautifulsoup4
-- dash
-- fbprophet
+How to Install Required Packages for Development
+1. Download requirements.txt
+2. pip install -r requirements.txt
