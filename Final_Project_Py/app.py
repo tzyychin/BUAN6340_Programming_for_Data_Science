@@ -15,7 +15,7 @@ app.layout = html.Div(
     [
         html.Link(href='/assets/normalize.css', rel='stylesheet'),
         html.H1(
-            'BUAN6340:Programming for Data Science - J\'s Finance Explorer',
+            'Programming for Data Science - J\'s Finance Explorer',
             style={'fontSize': 22}),
         dcc.Dropdown(
             id='dropdown',
