@@ -31,8 +31,20 @@ app.layout = html.Div(
             }],
             value='AAPL'),
         html.Div(id='temp-value', style={'display': 'none'}),
-        dcc.Graph(id='graph', config={'displaylogo': False}),
-        html.Table(id='table', style={'fontSize': 14})
+        dcc.Graph(
+            id='graph',
+            config={
+                'editable':
+                False,
+                'modeBarButtonsToRemove': [
+                    'sendDataToCloud', 'zoom2d', 'select2d', 'pan2d',
+                    'lasso2d', 'resetScale2d', 'hoverClosestCartesian',
+                    'hoverCompareCartesian', 'toggleSpikelines'
+                ],
+                'displaylogo':
+                False
+            }),
+        html.Table(id='table', style={'fontSize': 15})
     ],
     style={
         'marginLeft': 15,
@@ -53,9 +65,15 @@ def clean_data(selected_dropdown_value):
     cvMeanError = symbol.cv_mean_error
     meanError = symbol.mean_error
     summary = pd.DataFrame(
-        [[shareOutstanding, marketCap, cvMeanError, meanError]],
+        [[
+            selected_dropdown_value, shareOutstanding, marketCap, cvMeanError,
+            meanError
+        ]],
         index=['0'],
-        columns=['shareOutstanding', 'marketCap', 'cvMeanError', 'meanError'])
+        columns=[
+            'company', 'shareOutstanding', 'marketCap', 'cvMeanError',
+            'meanError'
+        ])
 
     datasets = {
         'training': training.to_json(orient='split', date_format='iso'),
@@ -72,6 +90,7 @@ def update_graph(jsonified_cleaned_data):
     training = pd.read_json(datasets['training'], orient='split')
     test = pd.read_json(datasets['test'], orient='split')
     forecasts = pd.read_json(datasets['forecasts'], orient='split')
+    summary = pd.read_json(datasets['summary'], orient='split')
     trace1 = {
         'x': training.ds,
         'y': training.y,
@@ -129,8 +148,9 @@ def update_graph(jsonified_cleaned_data):
         'lines+text'
     }
     layout = {
-        # 'title': 'NASDAQ: ' + selected_dropdown_value,
-        'yaxis': dict(title='Price')
+        'title': 'NASDAQ: ' + summary.company[0],
+        'yaxis': dict(title='Price'),
+        'legend': dict(x=0, y=1)
     }
     return {
         'data': [trace1, trace2, trace3, trace4, trace5, trace6],
