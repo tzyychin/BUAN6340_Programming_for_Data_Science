@@ -8,3 +8,7 @@ Change Logs
 - 5/13/2018 add normalize.css
 - 5/15/2018 add requirements.txt
 - 5/16/2018 improve the execution time of the code
+
+Reference
+- [Prophet](https://facebook.github.io/prophet/)
+- [Dash](https://dash.plot.ly/)
