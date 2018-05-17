@@ -2,41 +2,76 @@ import dash
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
-import time
-from finance import *
+import json
+import pandas as pd
+from stock import *
 
-app = dash.Dash()
+app = dash.Dash(__name__, static_folder='assets')
+app.scripts.config.serve_locally = True
+app.css.config.serve_locally = True
+
 app.title = 'UT Dallas'
-app.layout = html.Div([
-    html.H1(
-        'BUAN6340:Programming for Data Science - J\'s Finance Explorer',
-        style={'fontSize': 22}),
-    dcc.Dropdown(
-        id='my-dropdown',
-        options=[{
-            'label': 'Apple',
-            'value': 'AAPL'
-        }, {
-            'label': 'Google',
-            'value': 'GOOGL'
-        }, {
-            'label': 'Microsoft',
-            'value': 'MSFT'
-        }],
-        value='AAPL'),
-    dcc.Graph(id='my-graph', config={'displaylogo': False}),
-    html.Table(id='my-table')
-])
+app.layout = html.Div(
+    [
+        html.Link(href='/assets/normalize.css', rel='stylesheet'),
+        html.H1(
+            'BUAN6340:Programming for Data Science - J\'s Finance Explorer',
+            style={'fontSize': 22}),
+        dcc.Dropdown(
+            id='dropdown',
+            options=[{
+                'label': 'Apple',
+                'value': 'AAPL'
+            }, {
+                'label': 'Google',
+                'value': 'GOOGL'
+            }, {
+                'label': 'Microsoft',
+                'value': 'MSFT'
+            }],
+            value='AAPL'),
+        html.Div(id='temp-value', style={'display': 'none'}),
+        dcc.Graph(id='graph', config={'displaylogo': False}),
+        html.Table(id='table', style={'fontSize': 14})
+    ],
+    style={
+        'marginLeft': 15,
+        'marginRight': 15
+    })
 
 
-@app.callback(Output('my-graph', 'figure'), [Input('my-dropdown', 'value')])
-def update_graph(selected_dropdown_value):
-
-    symbol = stock(selected_dropdown_value, "6M")
+@app.callback(Output('temp-value', 'children'), [Input('dropdown', 'value')])
+def clean_data(selected_dropdown_value):
+    symbol = stock(selected_dropdown_value, "1Y")
     symbol.prophetModel()
     training = symbol.getTrainingData()
     test = symbol.getTestData()
     forecasts = symbol.getForecasts()
+
+    shareOutstanding = symbol.shares_outstanding
+    marketCap = symbol.shares_outstanding * symbol.previous_close
+    cvMeanError = symbol.cv_mean_error
+    meanError = symbol.mean_error
+    summary = pd.DataFrame(
+        [[shareOutstanding, marketCap, cvMeanError, meanError]],
+        index=['0'],
+        columns=['shareOutstanding', 'marketCap', 'cvMeanError', 'meanError'])
+
+    datasets = {
+        'training': training.to_json(orient='split', date_format='iso'),
+        'test': test.to_json(orient='split', date_format='iso'),
+        'forecasts': forecasts.to_json(orient='split', date_format='iso'),
+        'summary': summary.to_json(orient='split', date_format='iso')
+    }
+    return json.dumps(datasets)
+
+
+@app.callback(Output('graph', 'figure'), [Input('temp-value', 'children')])
+def update_graph(jsonified_cleaned_data):
+    datasets = json.loads(jsonified_cleaned_data)
+    training = pd.read_json(datasets['training'], orient='split')
+    test = pd.read_json(datasets['test'], orient='split')
+    forecasts = pd.read_json(datasets['forecasts'], orient='split')
     trace1 = {
         'x': training.ds,
         'y': training.y,
@@ -94,7 +129,7 @@ def update_graph(selected_dropdown_value):
         'lines+text'
     }
     layout = {
-        'title': 'NASDAQ: ' + selected_dropdown_value,
+        # 'title': 'NASDAQ: ' + selected_dropdown_value,
         'yaxis': dict(title='Price')
     }
     return {
@@ -103,27 +138,24 @@ def update_graph(selected_dropdown_value):
     }
 
 
-@app.callback(Output('my-table', 'children'), [Input('my-dropdown', 'value')])
-def update_table(selected_dropdown_value):
-    symbol = stock(selected_dropdown_value, "1Y")
-    symbol.prophetModel()
-    elapsedTime = time.time() - startTime
-    print(elapsedTime)
+@app.callback(Output('table', 'children'), [Input('temp-value', 'children')])
+def update_table(jsonified_cleaned_data):
+    datasets = json.loads(jsonified_cleaned_data)
+    summary = pd.read_json(datasets['summary'], orient='split')
     table = [
         html.Tr([
             html.Th("Shares Outstanding: "),
-            html.Td("$ {:,.0f}".format(symbol.shares_outstanding)),
+            html.Td("$ {:,.0f}".format(summary.shareOutstanding[0])),
             html.Th("Market Cap: "),
-            html.Td("$ {:,.0f}".format(
-                symbol.shares_outstanding * symbol.previous_close)),
+            html.Td("$ {:,.0f}".format(summary.marketCap[0])),
             html.Th("Mean Prediction Error on Validation Dataset: "),
-            html.Td("$ {:.2f}".format(symbol.cv_avg_mean_error)),
+            html.Td("$ {:.2f}".format(summary.cvMeanError[0])),
             html.Th("Mean Prediction Error on Test Dataset: "),
-            html.Td("$ {:.2f}".format(symbol.avg_mean_error)),
+            html.Td("$ {:.2f}".format(summary.meanError[0]))
         ])
     ]
     return table
 
 
 if __name__ == '__main__':
-    app.run_server()
+    app.run_server(debug=True)

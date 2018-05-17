@@ -1,11 +1,8 @@
 import pandas as pd
 import numpy as np
-import requests
 from fbprophet import Prophet
 from fbprophet.diagnostics import cross_validation
 from finance import getPrices, getSharesOutstanding
-from plotly.offline import plot
-import plotly.graph_objs as go
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
@@ -26,7 +23,7 @@ class stock(object):
         self.previous_close = df.loc[df['Date'] == max(df['Date'])][
             'Close'].values[0]
         self.forecast = pd.DataFrame()
-        self.avg_mean_error = 0
+        self.mean_error = 0
         self.shares_outstanding = getSharesOutstanding(c)
 
     def getHistory(self):
@@ -41,14 +38,14 @@ class stock(object):
             yearly_seasonality=False,
             changepoint_prior_scale=0.1)
         model.add_seasonality(name='monthly', period=30.5, fourier_order=5)
-        split_date = self.max_date - pd.DateOffset(days=30)
+        split_date = self.max_date - pd.DateOffset(days=28)
         train = df[df['ds'] <= split_date]
         test = df[df['ds'] >= split_date]
         model.fit(train)
         future = model.make_future_dataframe(periods=30, include_history=True)
         df_cv = cross_validation(model, horizon='30 days')
-        cv_avg_mean_error = np.mean(abs(df_cv['y'] - df_cv['yhat']))
-        self.cv_avg_mean_error = cv_avg_mean_error
+        cv_mean_error = np.mean(abs(df_cv['y'] - df_cv['yhat']))
+        self.cv_mean_error = cv_mean_error
         forecasts = model.predict(future)
         forecasts = forecasts[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
         self.train = train.copy()
@@ -56,8 +53,8 @@ class stock(object):
         self.forecasts = forecasts.copy()
         # model.plot(forecast)
         evaluation = pd.merge(test, forecasts, on='ds', how='inner')
-        avg_mean_error = np.mean(abs(evaluation['y'] - evaluation['yhat']))
-        self.avg_mean_error = avg_mean_error
+        mean_error = np.mean(abs(evaluation['y'] - evaluation['yhat']))
+        self.mean_error = mean_error
 
     def getTrainingData(self):
         return self.train
