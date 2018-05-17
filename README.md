@@ -4,10 +4,10 @@
 1. Download requirements.txt
 2. `pip install -r requirements.txt`
 
-**Execution**
+**Execution**<br/>
 Command Prompt
 1. Change Current Working Directory to Final_Project_Py
-2. `python app.py`
+2. `python app.py`<br/>
 The Program Will be Running on `http://127.0.0.1:8050/`
 
 ![project](https://user-images.githubusercontent.com/22257488/40204844-908f2eba-59ef-11e8-9153-cadb72135b16.png)
