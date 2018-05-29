@@ -17,7 +17,6 @@
 - 5/16/2018 removed duplicate code and implemented the technique of Sharing State Between Callbacks
 - 5/17/2018 fixed some bugs
 - 5/29/2018 added app_mlp.py (implemented multiprocessing with the intention of reducing execution time)
-  `..> python app_mlp.py`
 
 #### Reference
 - [Prophet](https://facebook.github.io/prophet/)
