@@ -1,5 +1,6 @@
 ### Programming for Data Science: J's Finance Explorer
-
+Q: Stock price prediction is not something new, and besides you cannot even compete against those apps designed by Google and Yahoo.
+A: I think this topic is really suitable for python beginners and those who want to learn how to do analysis on time-series data, web scrapping, web design, multiprocessing and machine learning. 
 #### How to Install Required Packages for Development
 1. Download requirements.txt
 2. `pip install -r requirements.txt`
@@ -9,6 +10,9 @@
 2. `..> python app.py`
 3. Open Your Favorite Browser -Chrome, Edge, and Firefox- and Type `http://127.0.0.1:8050/` in the Address Bar
 
+#### SLIDES
+![slides](https://user-images.githubusercontent.com/22257488/41125373-e4b6711c-6a69-11e8-872d-0d9846372543.PNG)
+#### DEMO
 ![project](https://user-images.githubusercontent.com/22257488/40204844-908f2eba-59ef-11e8-9153-cadb72135b16.png)
 
 #### Change Notes
