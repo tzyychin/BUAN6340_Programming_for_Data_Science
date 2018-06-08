@@ -2,7 +2,7 @@
 
 #### The Most Frequently-asked Question
 Q: Stock price forecast is not something new, and besides it is fairly hard to compete against those apps designed by Google, Yahoo and other software companies.</br>
-A: Learning a new language is not easy and rather painful most of the time. Stock price prediction, to me, is a suitable topic for python learners to begin the programming journey. This project includes the following techniques: machine learning, web scrapping, multiprocessing, data visualization, time-series data analysis, API as well as other open source libraries.
+A: Learning a new language is not easy and rather painful most of the time. Stock price prediction, to me, is a suitable topic for python beginners to start their journeys. This project includes the following techniques: machine learning, web scrapping, multiprocessing, data visualization, time-series data analysis, API as well as other open source libraries.
 
 #### How to Install Required Packages for Development
 1. Download requirements.txt
