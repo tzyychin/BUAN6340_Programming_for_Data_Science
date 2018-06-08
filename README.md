@@ -1,8 +1,9 @@
 ### Programming for Data Science: J's Finance Explorer
 
-#### The most Frequently-asked Question
-Q: Stock price prediction is not something new, and besides it is hard to compete against those apps designed by Google and Yahoo.</br>
-A: I think this topic is really suitable for python beginners and those who want to learn machine learning, web scrapping, web design, multiprocessing, data visualization and how to do analysis on time-series data, use API and other open source libraries.
+#### The Most Frequently-asked Question
+Q: Stock price forecast is not something new, and besides it is fairly hard to compete against those apps designed by Google, Yahoo and other software companies.</br>
+A: Learning a new language is not easy and rather painful most of the time. Stock price prediction, to me, is a suitable topic for python learners to begin the programming journey. This project includes the following techniques: machine learning, web scrapping, multiprocessing, data visualization, time-series data analysis, API as well as other open source libraries.
+
 #### How to Install Required Packages for Development
 1. Download requirements.txt
 2. `pip install -r requirements.txt`
