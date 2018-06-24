@@ -7,6 +7,7 @@ pystan
 fbprophet
 Flask >= 0.12
 flask-compress
+flask-restful
 Werkzeug >= 0.14
 requests
 plotly
