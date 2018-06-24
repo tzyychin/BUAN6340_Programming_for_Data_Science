@@ -4,9 +4,14 @@ import dash_core_components as dcc
 import dash_html_components as html
 import json
 import pandas as pd
+from flask_restful import Api
+from flask import Flask
 from stock import *
+import stockApi
 
-app = dash.Dash(__name__, static_folder='assets')
+server = Flask(__name__)
+app = dash.Dash(__name__, static_folder='assets', server=server)
+api = Api(server)
 app.scripts.config.serve_locally = True
 app.css.config.serve_locally = True
 

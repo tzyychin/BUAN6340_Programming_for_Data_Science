@@ -2,14 +2,19 @@ import dash
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
+from flask_restful import Api
+from flask import Flask
 import json
+import stockApi
 import pandas as pd
 from stock import *
 import multiprocessing as mp
 import warnings
 warnings.simplefilter(action='ignore', category=Warning)
 
-app = dash.Dash(__name__, static_folder='assets')
+server = Flask(__name__)
+app = dash.Dash(__name__, static_folder='assets', server=server)
+api = Api(server)
 app.scripts.config.serve_locally = True
 app.css.config.serve_locally = True
 
@@ -203,5 +208,6 @@ def update_table(jsonified_cleaned_data):
     return table
 
 
+api.add_resource(stockApi.api, '/api/<string:symbol>')
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, port=8050, host='127.0.0.1')
