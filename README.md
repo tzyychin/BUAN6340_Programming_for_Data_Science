@@ -12,7 +12,7 @@
 3. Open Your Favorite Browser -Chrome, Edge, and Firefox- and Type `http://127.0.0.1:8050/` in the Address Bar
 
 ![project](https://user-images.githubusercontent.com/22257488/40204844-908f2eba-59ef-11e8-9153-cadb72135b16.png)
-
+![api](https://user-images.githubusercontent.com/22257488/41823194-a5e282fe-77c1-11e8-8f30-14dc8aade337.PNG)
 #### Change Notes
 - 4/15/2018 added finance.py(implemented web scraping)
 - 4/20/2018 added app.py
@@ -23,7 +23,7 @@
 - 5/17/2018 fixed some bugs
 - 5/29/2018 added app_mlp.py (implemented multiprocessing with the intention of reducing execution time)<br/>
 `..> python app_mlp.py`
-- 6/24/2018 added a get function of flask RESTful api
+- 6/24/2018 added a get function of flask RESTful api, updated requirements.txt
 
 #### Reference
 - [Prophet](https://facebook.github.io/prophet/)
