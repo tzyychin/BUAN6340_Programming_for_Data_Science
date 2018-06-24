@@ -1,8 +1,6 @@
 ### Programming for Data Science: J's Finance Explorer
 
-#### The Most Frequently-asked Question
-Q: Stock price forecast is not something new, and besides it is fairly hard to compete against those apps designed by Google, Yahoo and other software companies.</br>
-A: Learning a new language is not easy and rather painful most of the time. Stock price prediction, to me, is a suitable topic for python beginners to start their journeys. This project includes the following techniques: machine learning, web scrapping, multiprocessing, data visualization, time-series data analysis, API as well as other open source libraries.
+ This project includes the following techniques: RESTful API, flask web framework, web scrapping, multiprocessing, data visualization, and time-series data analysis (machine learning).
 
 #### How to Install Required Packages for Development
 1. Download requirements.txt
@@ -15,10 +13,6 @@ A: Learning a new language is not easy and rather painful most of the time. Stoc
 
 ![project](https://user-images.githubusercontent.com/22257488/40204844-908f2eba-59ef-11e8-9153-cadb72135b16.png)
 
-#### SLIDES
-![slides](https://user-images.githubusercontent.com/22257488/41125373-e4b6711c-6a69-11e8-872d-0d9846372543.PNG)
-
-
 #### Change Notes
 - 4/15/2018 added finance.py(implemented web scraping)
 - 4/20/2018 added app.py
@@ -29,9 +23,7 @@ A: Learning a new language is not easy and rather painful most of the time. Stoc
 - 5/17/2018 fixed some bugs
 - 5/29/2018 added app_mlp.py (implemented multiprocessing with the intention of reducing execution time)<br/>
 `..> python app_mlp.py`
-
-#### Future Work
-- Pipeline: Tuning parameters
+- 6/24/2018 added a get function of flask RESTful api
 
 #### Reference
 - [Prophet](https://facebook.github.io/prophet/)
